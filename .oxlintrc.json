@@ -1,19 +1,13 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript",
-    "unicorn",
-    "import"
-  ],
+  "plugins": ["typescript", "unicorn", "import"],
   "categories": {
     "correctness": "off"
   },
   "env": {
     "builtin": true
   },
-  "ignorePatterns": [
-    "**/dist/*"
-  ],
+  "ignorePatterns": ["**/dist/*"],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "error",
     "no-array-constructor": "error",
@@ -49,9 +43,7 @@
   },
   "overrides": [
     {
-      "files": [
-        null
-      ],
+      "files": [],
       "rules": {
         "no-class-assign": "off",
         "no-const-assign": "off",
@@ -72,9 +64,7 @@
       }
     },
     {
-      "files": [
-        "examples/**/*.ts"
-      ],
+      "files": ["examples/**/*.ts"],
       "rules": {
         "unicorn/prefer-top-level-await": "off",
         "no-unused-vars": "off"

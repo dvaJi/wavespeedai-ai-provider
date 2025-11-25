@@ -18,7 +18,7 @@
     "dev": "tsdown --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
-    "lint": "oxlint \"./**/*.ts*\"",
+    "lint": "oxlint",
     "prettier-check": "prettier --check \"./**/*.ts*\"",
     "prettier-write": "prettier . --write \"./**/*.ts*\"",
     "changeset": "changeset",

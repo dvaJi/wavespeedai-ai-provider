@@ -50,7 +50,7 @@ export class WaveSpeedAIImageModel implements ImageModelV2 {
 
     const currentDate = this.config._internal?.currentDate?.() ?? new Date();
 
-    const { value, responseHeaders } = await postJsonToApi({
+    const { value: valueCreateImage, responseHeaders } = await postJsonToApi({
       url: `${this.config.baseURL}/${this.modelId}`,
       headers: combineHeaders(await resolve(this.config.headers), headers, {
         prefer: "wait",
@@ -75,7 +75,7 @@ export class WaveSpeedAIImageModel implements ImageModelV2 {
 
     while (true) {
       const { value } = await postJsonToApi({
-        url: `${this.config.baseURL}/${this.modelId}`,
+        url: `${this.config.baseURL}/predictions/${valueCreateImage.data.id}/result`,
         headers: combineHeaders(await resolve(this.config.headers), headers, {
           prefer: "wait",
         }),
