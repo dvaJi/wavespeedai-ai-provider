@@ -74,21 +74,11 @@ export class WaveSpeedAIImageModel implements ImageModelV2 {
     let output: null | string | string[] = null;
 
     while (true) {
-      const { value } = await postJsonToApi({
+      const { value } = await getFromApi({
         url: `${this.config.baseURL}/predictions/${valueCreateImage.data.id}/result`,
         headers: combineHeaders(await resolve(this.config.headers), headers, {
           prefer: "wait",
         }),
-
-        body: {
-          prompt,
-          aspect_ratio: aspectRatio,
-          size,
-          seed,
-          num_outputs: n,
-          ...(providerOptions.wavespeedai ?? {}),
-        },
-
         successfulResponseHandler: createJsonResponseHandler(wavespeedaiImageResponseSchema),
         failedResponseHandler: wavespeedaiFailedResponseHandler,
         abortSignal,
@@ -104,8 +94,6 @@ export class WaveSpeedAIImageModel implements ImageModelV2 {
       } else if (status === "failed") {
         console.error("Task failed:", data.error);
         break;
-      } else {
-        console.log("Task still processing. Status:", status);
       }
 
       await new Promise((resolve) => setTimeout(resolve, 0.1 * 1000));
@@ -149,9 +137,20 @@ const wavespeedaiPredictResponseSchema = z.object({
 });
 
 const wavespeedaiImageResponseSchema = z.object({
+  code: z.number(),
+  message: z.string(),
   data: z.object({
+    id: z.string(),
+    model: z.string(),
     outputs: z.union([z.array(z.string()), z.string()]),
-    status: z.enum(["completed", "failed", "processing"]),
+    urls: z.object({
+      get: z.string(),
+    }),
+    has_nsfw_contents: z.array(z.boolean()),
+    status: z.enum(["created", "completed", "failed", "processing"]),
+    created_at: z.string(),
     error: z.string().optional(),
+    executionTime: z.number().optional(),
+    timings: z.object({ inference: z.number().optional() }).optional(),
   }),
 });
