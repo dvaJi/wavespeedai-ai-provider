@@ -34,7 +34,7 @@ export class WaveSpeedAIImageModel implements ImageModelV3 {
   constructor(
     readonly modelId: WaveSpeedAIImageModelId,
     private readonly config: WaveSpeedAIImageModelConfig,
-  ) { }
+  ) {}
 
   async doGenerate({
     prompt,

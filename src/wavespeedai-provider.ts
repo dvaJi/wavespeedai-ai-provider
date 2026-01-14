@@ -66,18 +66,18 @@ export function createWaveSpeedAI(options: WaveSpeedAIProviderSettings = {}): Wa
   const embeddingModel = (modelId: string) => {
     throw new NoSuchModelError({
       modelId,
-      modelType: 'embeddingModel',
+      modelType: "embeddingModel",
     });
   };
 
   return {
-    specificationVersion: 'v3' as const,
+    specificationVersion: "v3" as const,
     image: createImageModel,
     imageModel: createImageModel,
     languageModel: (modelId: string) => {
       throw new NoSuchModelError({
         modelId,
-        modelType: 'languageModel',
+        modelType: "languageModel",
       });
     },
     embeddingModel,
